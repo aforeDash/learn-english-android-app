@@ -1,7 +1,9 @@
 package com.innovamates.learnenglish.views.activities
 
 import android.content.Context
+import android.net.ConnectivityManager.OnNetworkActiveListener
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
@@ -13,6 +15,7 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.youtube.player.MyYoutubePlayer
 import com.innovamates.learnenglish.R
 import com.innovamates.learnenglish.databinding.ActivityMainBinding
+import com.innovamates.learnenglish.utils.NotificationBarMovedListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -20,6 +23,8 @@ class MainActivity : AppCompatActivity() {
 
     lateinit var navView: BottomNavigationView
     lateinit var myYoutubePlayer: MyYoutubePlayer
+
+    var notificationBarMovedListener: NotificationBarMovedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,8 +38,11 @@ class MainActivity : AppCompatActivity() {
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
         val navController = navHostFragment.navController
 
-        val appBarConfiguration = AppBarConfiguration(setOf(
-            R.id.navigation_home, R.id.navigation_favorite, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_home, R.id.navigation_favorite, R.id.navigation_notifications
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
     }
@@ -52,6 +60,19 @@ class MainActivity : AppCompatActivity() {
         super.onDestroy()
         myYoutubePlayer.youtubePlayer.release()
     }
+
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        if (hasFocus) { // hasFocus is true
+            // the user pushed the notification bar back to the top
+            Log.i("Tag", "Notification bar is pushed up")
+        } else { // hasFocus is false
+            // the user pulls down the notification bar
+            Log.i("Tag", "Notification bar is pulled down")
+            notificationBarMovedListener?.onNotificationPullDown()
+        }
+        super.onWindowFocusChanged(hasFocus)
+    }
+
 
 }
 

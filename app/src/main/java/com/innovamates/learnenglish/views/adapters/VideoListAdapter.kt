@@ -54,9 +54,11 @@ class VideoListAdapter(
                     (context as AppCompatActivity).supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
                 val navController = navHostFragment.navController
 
-                navController.navigate(R.id.navigation_player_fragment,
+                navController.navigate(
+                    R.id.navigation_player_fragment,
                     bundle,
-                    navController.getNavigationAnimation())
+                    navController.getNavigationAnimation()
+                )
             }
         }
     }
@@ -78,10 +80,10 @@ class VideoListAdapter(
     fun addItem(videoItem: VideoItem, index: Int) {
         if (index < list.size) {
             (list as ArrayList)[index] = videoItem
+            notifyItemChanged(index)
         } else {
             (list as ArrayList).add(index, videoItem)
-
+            notifyItemInserted(index)
         }
-        notifyItemInserted(index)
     }
 }

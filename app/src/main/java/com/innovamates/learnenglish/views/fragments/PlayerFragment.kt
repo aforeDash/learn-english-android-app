@@ -4,6 +4,7 @@ import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.animation.ValueAnimator
 import android.os.Bundle
+import android.os.RecoverySystem
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,18 +12,22 @@ import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.youtube.player.MyYoutubePlayer
+import com.google.android.youtube.player.YouTubePlayer
 import com.google.android.youtube.player.YouTubePlayer.PlaybackEventListener
 import com.innovamates.learnenglish.databinding.FragmentPlayerBinding
 import com.innovamates.learnenglish.models.videoitem.VideoItem
 import com.innovamates.learnenglish.repository.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.utils.*
 import com.innovamates.learnenglish.viewmodels.PlayerViewModel
+import com.innovamates.learnenglish.views.activities.MainActivity
 import com.innovamates.learnenglish.views.activities.getMyYoutubePlayer
 import com.innovamates.learnenglish.views.activities.hideNavView
 import com.innovamates.learnenglish.views.activities.showNavView
 import com.innovamates.learnenglish.views.adapters.DATA
 import com.innovamates.learnenglish.views.adapters.SentenceListAdapter
+import com.innovamates.learnenglish.views.adapters.SentenceVerticalListAdapter
 import kotlin.math.roundToLong
 
 
@@ -39,7 +44,9 @@ class PlayerFragment : Fragment() {
     private val indexMap = HashMap<Long, Int>()
 
     private var sentenceListAdapter: SentenceListAdapter? = null
+    private var sentenceVerticalListAdapter: SentenceVerticalListAdapter? = null
     private var layoutManager: LinearLayoutManager? = null
+    private var verticalLayoutManager: LinearLayoutManager? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,7 +63,12 @@ class PlayerFragment : Fragment() {
 
         videoItem?.let {
             sentenceListAdapter = SentenceListAdapter(requireContext(), it.sentences)
+            sentenceVerticalListAdapter =
+                SentenceVerticalListAdapter(requireContext(), it.sentences)
+
             layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+            verticalLayoutManager =
+                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         }
 
     }
@@ -76,6 +88,22 @@ class PlayerFragment : Fragment() {
         setupVideoController()
         initVideoPlaying()
         initRecyclerView()
+
+        initNotificationBarMoveListener()
+    }
+
+    private fun initNotificationBarMoveListener() {
+        activity?.let {
+            if (it is MainActivity) {
+                it.notificationBarMovedListener = object : NotificationBarMovedListener {
+                    override fun onNotificationPullDown() {
+                        context?.getMyYoutubePlayer()?.let { myPlayer ->
+                            pausePlaying(myPlayer)
+                        }
+                    }
+                }
+            }
+        }
     }
 
     private fun initRecyclerView() {
@@ -83,6 +111,11 @@ class PlayerFragment : Fragment() {
             binding?.rvSentenceList?.apply {
                 adapter = sentenceListAdapter
                 layoutManager = this@PlayerFragment.layoutManager
+            }
+
+            binding?.rvSentenceVerticalList?.apply {
+                adapter = sentenceVerticalListAdapter
+                layoutManager = this@PlayerFragment.verticalLayoutManager
             }
 
             binding?.rvSentenceList?.attachSnapHelperWithListener(SnapHelper().snapHelper,
@@ -98,7 +131,7 @@ class PlayerFragment : Fragment() {
             binding?.ibBack?.setOnClickListener {
                 layoutManager?.let {
                     val position = it.findFirstCompletelyVisibleItemPosition()
-                    binding?.rvSentenceList?.smoothScrollToPosition(position - 1)
+                    binding?.rvSentenceList?.scrollToPosition(position - 1)
                     videoItem?.let { videoItem ->
                         onPositionChanged(videoItem, position - 1)
                     }
@@ -108,7 +141,7 @@ class PlayerFragment : Fragment() {
             binding?.ibForward?.setOnClickListener {
                 layoutManager?.let {
                     val position = it.findFirstCompletelyVisibleItemPosition()
-                    binding?.rvSentenceList?.smoothScrollToPosition(position + 1)
+                    binding?.rvSentenceList?.scrollToPosition(position + 1)
                     videoItem?.let { videoItem ->
                         onPositionChanged(videoItem, position + 1)
                     }
@@ -138,6 +171,11 @@ class PlayerFragment : Fragment() {
                 binding?.ibBack?.visibility = View.VISIBLE
                 binding?.ibForward?.visibility = View.VISIBLE
             }
+        }
+
+        binding?.rvSentenceVerticalList?.scrollToPosition(position)
+        binding?.rvSentenceVerticalList?.post {
+            sentenceVerticalListAdapter?.activate(position)
         }
     }
 
@@ -190,6 +228,10 @@ class PlayerFragment : Fragment() {
                             youtubePlayer.pause()
                             youtubePlayer.seekToMillis((videoItem.videoStartTimeSec * 1000).toInt())
                         }
+                    }
+
+                    override fun onAnimationPause(animation: Animator?) {
+                        super.onAnimationPause(animation)
                     }
                 })
 
@@ -290,5 +332,4 @@ class PlayerFragment : Fragment() {
         context?.showNavView()
         super.onStop()
     }
-
 }

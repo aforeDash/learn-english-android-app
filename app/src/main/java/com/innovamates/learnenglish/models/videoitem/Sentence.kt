@@ -6,5 +6,6 @@ data class Sentence(
     val translation: String,
     val startTimeSec: Long,
     val endTimeSec: Long,
+    var isPlaying: Boolean = false
 ) {
 }

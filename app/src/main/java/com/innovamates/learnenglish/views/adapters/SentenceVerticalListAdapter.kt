@@ -11,30 +11,17 @@ import com.innovamates.learnenglish.R
 import com.innovamates.learnenglish.models.videoitem.Sentence
 
 
-class SentenceListAdapter(
+class SentenceVerticalListAdapter(
     private val context: Context,
     private val list: List<Sentence>,
-) : RecyclerView.Adapter<SentenceListAdapter.ViewHolder>() {
-
-    init {
-        repeatEnabled = false
-    }
+) : RecyclerView.Adapter<SentenceVerticalListAdapter.ViewHolder>() {
 
     private var currentPosition = 0
+    private var lastPlayingPosition = 0
 
-    class ViewHolder(itemView: View, sentenceListAdapter: SentenceListAdapter) :
-        RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvFirstSentence: TextView = itemView.findViewById(R.id.tv_first_sentence)
-        private val tvPage: TextView = itemView.findViewById(R.id.tv_page)
-        private val ibRepeat: ImageButton = itemView.findViewById(R.id.ib_repeat)
-
-        init {
-            ibRepeat.setOnClickListener {
-                repeatEnabled = !repeatEnabled
-                sentenceListAdapter.notifyDataSetChanged()
-            }
-        }
 
         fun bind(
             context: Context,
@@ -43,30 +30,18 @@ class SentenceListAdapter(
             total: Int,
         ) {
             tvFirstSentence.text = sentence.sentence
-
-            val pages = context.getString(R.string.pages)
-                .replace("#", (current + 1).toString())
-                .replace("$", total.toString())
-
-            tvPage.text = pages
-
-            setupRepeat(ibRepeat)
-
-        }
-
-        private fun setupRepeat(ibRepeat: ImageButton) {
-            if (repeatEnabled) {
-                ibRepeat.setBackgroundResource(R.drawable.border_shape_round_grey)
+            if (sentence.isPlaying) {
+                itemView.setBackgroundResource(R.drawable.border_shape_round_blue)
             } else {
-                ibRepeat.setBackgroundResource(R.drawable.visible_border_shape_round_grey)
+                itemView.setBackgroundResource(R.drawable.border_shape_round_grey)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.single_sentence_list_item, parent, false)
-        return ViewHolder(view, this)
+            .inflate(R.layout.single_sentence_vertical_list_item, parent, false)
+        return ViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -88,14 +63,13 @@ class SentenceListAdapter(
         }
     }
 
-    fun getCurrentPosition(): Int {
-        return if (repeatEnabled)
-            currentPosition
-        else
-            -1
-    }
+    fun activate(position: Int) {
+        list[lastPlayingPosition].isPlaying = false
+        notifyItemChanged(lastPlayingPosition)
 
-    companion object {
-        var repeatEnabled = false
+        list[position].isPlaying = true
+        notifyItemChanged(position)
+
+        lastPlayingPosition = position
     }
 }

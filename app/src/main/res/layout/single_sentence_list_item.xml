@@ -3,41 +3,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="350dp"
+    android:layout_height="match_parent"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
     android:background="@drawable/border_shape_round"
-    android:padding="20dp">
+    android:padding="15dp">
 
     <ImageButton
-        android:id="@+id/tv_title"
+        android:id="@+id/ib_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/visible_border_shape_round_grey"
+        android:padding="10dp"
         android:src="@drawable/ic_baseline_repeat_24"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <FrameLayout
-        android:id="@+id/iv_thumbnail"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/white"
-        android:contentDescription="@string/video_thumbnail"
-        app:layout_constraintBottom_toTopOf="@+id/tv_page"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_first_sentence" />
 
     <TextView
         android:id="@+id/tv_first_sentence"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
+        android:lines="6"
+        android:maxLines="6"
         android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="@+id/iv_thumbnail"
-        app:layout_constraintTop_toTopOf="@+id/iv_thumbnail"
+        android:textSize="17sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="Hello! World" />
 
     <TextView
@@ -47,8 +39,9 @@
         android:gravity="center"
         android:textSize="15sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/ib_repeat"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_first_sentence"
         tools:text="1/23" />
 
 

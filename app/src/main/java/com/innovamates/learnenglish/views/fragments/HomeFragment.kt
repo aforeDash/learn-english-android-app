@@ -35,7 +35,7 @@ class HomeFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context?.let {
-            videoListAdapter = VideoListAdapter(it, arrayListOf<VideoItem>())
+            videoListAdapter = VideoListAdapter(it, arrayListOf())
         }
     }
 
@@ -50,6 +50,7 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding?.rvVideoList?.apply {
             adapter = videoListAdapter
             layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
