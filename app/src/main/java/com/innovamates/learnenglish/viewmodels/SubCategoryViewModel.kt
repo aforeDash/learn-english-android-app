@@ -2,13 +2,13 @@ package com.innovamates.learnenglish.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.innovamates.learnenglish.data.database.getDatabase
 import com.innovamates.learnenglish.data.repository.CategoryRepository
+import com.innovamates.learnenglish.data.database.getDatabase
 import com.innovamates.learnenglish.data.repository.VideoItemRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class HomeViewModel(application: Application) : AndroidViewModel(application) {
+class SubCategoryViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _eventNetworkError = MutableLiveData(false)
     val eventNetworkError: LiveData<Boolean>
@@ -18,36 +18,20 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
     val isNetworkErrorShown: LiveData<Boolean>
         get() = _isNetworkErrorShown
 
-    private val videoItemsRepository = VideoItemRepository(getDatabase(application))
-    private val categoriesRepository = CategoryRepository(getDatabase(application))
 
-    val videoItemList = videoItemsRepository.videoItems
-    val categoryList = categoriesRepository.categories
+    private val videosRepository = VideoItemRepository(getDatabase(application))
+
+    val videoItemList = videosRepository.videoItems
+
 
     init {
-        refreshVideoItems()
-        refreshCategories()
+        refreshDataFromRepository()
     }
 
-    private fun refreshCategories() {
+    private fun refreshDataFromRepository() {
         viewModelScope.launch {
             try {
-                categoriesRepository.refreshCategories()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-
-            } catch (networkError: IOException) {
-                // Show a Toast error message and hide the progress bar.
-                if (categoryList.value.isNullOrEmpty())
-                    _eventNetworkError.value = true
-            }
-        }
-    }
-
-    private fun refreshVideoItems() {
-        viewModelScope.launch {
-            try {
-                videoItemsRepository.refreshVideoItems()
+                videosRepository.refreshVideoItems()
                 _eventNetworkError.value = false
                 _isNetworkErrorShown.value = false
 
@@ -65,9 +49,9 @@ class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(HomeViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(SubCategoryViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return HomeViewModel(app) as T
+                return SubCategoryViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }

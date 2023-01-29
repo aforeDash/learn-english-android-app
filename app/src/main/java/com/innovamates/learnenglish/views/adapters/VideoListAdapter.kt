@@ -12,8 +12,8 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
-import com.innovamates.learnenglish.models.videoitem.VideoItem
-import com.innovamates.learnenglish.repository.database.typeconverter.DataConverter
+import com.innovamates.learnenglish.data.models.VideoItem
+import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.utils.getNavigationAnimation
 import com.innovamates.learnenglish.utils.setVideoThumbnail
 

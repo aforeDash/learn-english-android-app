@@ -1,4 +1,4 @@
-package com.innovamates.learnenglish.models.videoitem
+package com.innovamates.learnenglish.data.models
 
 data class Sentence(
     val id: Int,

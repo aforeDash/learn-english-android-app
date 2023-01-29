@@ -1,10 +1,12 @@
-package com.innovamates.learnenglish.repository.database.typeconverter
+package com.innovamates.learnenglish.data.database.typeconverter
 
 import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.innovamates.learnenglish.models.videoitem.Sentence
-import com.innovamates.learnenglish.models.videoitem.VideoItem
+import com.innovamates.learnenglish.data.models.Category
+import com.innovamates.learnenglish.data.models.Sentence
+import com.innovamates.learnenglish.data.models.SubCategory
+import com.innovamates.learnenglish.data.models.VideoItem
 
 class DataConverter {
 
@@ -12,6 +14,20 @@ class DataConverter {
     fun fromSentenceList(value: List<Sentence>): String {
         val gson = Gson()
         val type = object : TypeToken<List<Sentence>>() {}.type
+        return gson.toJson(value, type)
+    }
+
+    @TypeConverter
+    fun toCategoryList(value: String): List<SubCategory> {
+        val gson = Gson()
+        val type = object : TypeToken<List<SubCategory>>() {}.type
+        return gson.fromJson(value, type)
+    }
+
+    @TypeConverter
+    fun fromCategoryList(value: List<SubCategory>): String {
+        val gson = Gson()
+        val type = object : TypeToken<List<SubCategory>>() {}.type
         return gson.toJson(value, type)
     }
 

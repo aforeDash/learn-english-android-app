@@ -1,16 +1,16 @@
-package com.innovamates.learnenglish.repository.database.videoitem
+package com.innovamates.learnenglish.data.database.videoitem
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.innovamates.learnenglish.models.videoitem.Sentence
-import com.innovamates.learnenglish.models.videoitem.VideoItem
+import com.innovamates.learnenglish.data.models.Sentence
+import com.innovamates.learnenglish.data.models.VideoItem
 
 /**
  * DatabaseVideoItem represents a video entity in the database
  */
 
 @Entity
-data class DatabaseVideoItem constructor(
+data class DbVideoItem constructor(
     @PrimaryKey val id: Int,
     val title: String,
     val description: String,
@@ -24,7 +24,7 @@ data class DatabaseVideoItem constructor(
 /**
  * Map DatabaseVideoItem to domain entities
  */
-fun List<DatabaseVideoItem>.asDomainModel(): List<VideoItem> {
+fun List<DbVideoItem>.asDomainModel(): List<VideoItem> {
     return map {
         VideoItem(
             id = it.id,

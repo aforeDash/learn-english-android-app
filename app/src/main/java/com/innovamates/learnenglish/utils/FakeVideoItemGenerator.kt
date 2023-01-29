@@ -1,11 +1,11 @@
 package com.innovamates.learnenglish.utils
 
-import com.innovamates.learnenglish.models.videoitem.Sentence
-import com.innovamates.learnenglish.repository.database.videoitem.DatabaseVideoItem
+import com.innovamates.learnenglish.data.models.Sentence
+import com.innovamates.learnenglish.data.database.videoitem.DbVideoItem
 
 object FakeVideoItemGenerator {
-    fun getVideoItems(): List<DatabaseVideoItem> {
-        val list = ArrayList<DatabaseVideoItem>()
+    fun getVideoItems(): List<DbVideoItem> {
+        val list = ArrayList<DbVideoItem>()
 
         val listOfSentences = ArrayList<Sentence>()
 
@@ -42,7 +42,7 @@ object FakeVideoItemGenerator {
         listOfSentences.add(sentence13)
         listOfSentences.add(sentence14)
 
-        val databaseVideoItem1 = DatabaseVideoItem(1,
+        val dbVideoItem1 = DbVideoItem(1,
             "Kung Fu Panda",
             "Oogway Ascends",
             "https://www.youtube.com/watch?v=1",
@@ -51,7 +51,7 @@ object FakeVideoItemGenerator {
             50,
             listOfSentences)
 
-        list.add(databaseVideoItem1)
+        list.add(dbVideoItem1)
 
         return list
     }

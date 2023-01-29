@@ -1,15 +1,15 @@
-package com.innovamates.learnenglish.repository
+package com.innovamates.learnenglish.data.repository
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Transformations
-import com.innovamates.learnenglish.repository.database.LearnEnglishDatabase
-import com.innovamates.learnenglish.repository.database.videoitem.asDomainModel
-import com.innovamates.learnenglish.models.videoitem.VideoItem
+import com.innovamates.learnenglish.data.database.LearnEnglishDb
+import com.innovamates.learnenglish.data.database.videoitem.asDomainModel
+import com.innovamates.learnenglish.data.models.VideoItem
 import com.innovamates.learnenglish.utils.FakeVideoItemGenerator
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-class VideoItemsRepository(private val database: LearnEnglishDatabase) {
+class VideoItemRepository(private val database: LearnEnglishDb) {
 
     val videoItems: LiveData<List<VideoItem>> =
         Transformations.map(database.videoItemDao.getVideoItems()) {

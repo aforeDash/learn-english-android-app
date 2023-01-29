@@ -8,37 +8,33 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
-import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.innovamates.learnenglish.databinding.FragmentHomeBinding
+import com.innovamates.learnenglish.databinding.FragmentSubCategoryBinding
 import com.innovamates.learnenglish.utils.OnSnapPositionChangeListener
 import com.innovamates.learnenglish.utils.SnapHelper
 import com.innovamates.learnenglish.utils.SnapOnScrollListener
 import com.innovamates.learnenglish.utils.attachSnapHelperWithListener
-import com.innovamates.learnenglish.viewmodels.HomeViewModel
-import com.innovamates.learnenglish.views.adapters.CategoryListAdapter
+import com.innovamates.learnenglish.viewmodels.SubCategoryViewModel
 import com.innovamates.learnenglish.views.adapters.VideoListAdapter
 
-class HomeFragment : Fragment() {
+class SubCategoryFragment : Fragment() {
 
-    private var _binding: FragmentHomeBinding? = null
+    private var _binding: FragmentSubCategoryBinding? = null
     private val binding get() = _binding
 
-    private val homeViewModel: HomeViewModel by lazy {
+    private val subCategoryViewModel: SubCategoryViewModel by lazy {
         val activity = requireNotNull(this.activity) {
             "You can only access the viewModel after onActivityCreated()"
         }
-        ViewModelProvider(
-            this,
-            HomeViewModel.Factory(activity.application)
-        )[HomeViewModel::class.java]
+        ViewModelProvider(this,
+            SubCategoryViewModel.Factory(activity.application))[SubCategoryViewModel::class.java]
     }
 
-    private lateinit var categoryListAdapter: CategoryListAdapter
+    private lateinit var videoListAdapter: VideoListAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context?.let {
-            categoryListAdapter = CategoryListAdapter(it, arrayListOf())
+            videoListAdapter = VideoListAdapter(it, arrayListOf())
         }
     }
 
@@ -47,7 +43,7 @@ class HomeFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?,
     ): View {
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentSubCategoryBinding.inflate(inflater, container, false)
         return binding!!.root
     }
 
@@ -55,8 +51,8 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding?.rvVideoList?.apply {
-            adapter = categoryListAdapter
-            layoutManager = LinearLayoutManager(context, VERTICAL, false)
+            adapter = videoListAdapter
+            layoutManager = LinearLayoutManager(context, HORIZONTAL, false)
         }
 
         binding?.rvVideoList?.attachSnapHelperWithListener(SnapHelper().snapHelper,
@@ -69,9 +65,9 @@ class HomeFragment : Fragment() {
     }
 
     private fun observerData() {
-        homeViewModel.categoryList.observe(viewLifecycleOwner) {
-            it.forEachIndexed { index, category ->
-                categoryListAdapter.addItem(category, index)
+        subCategoryViewModel.videoItemList.observe(viewLifecycleOwner) {
+            it.forEachIndexed { index, videoItem ->
+                videoListAdapter.addItem(videoItem, index)
             }
         }
     }
@@ -79,6 +75,6 @@ class HomeFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        homeViewModel.videoItemList.removeObservers(viewLifecycleOwner)
+        subCategoryViewModel.videoItemList.removeObservers(viewLifecycleOwner)
     }
 }

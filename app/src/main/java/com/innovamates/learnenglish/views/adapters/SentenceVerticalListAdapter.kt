@@ -4,11 +4,10 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.innovamates.learnenglish.R
-import com.innovamates.learnenglish.models.videoitem.Sentence
+import com.innovamates.learnenglish.data.models.Sentence
 
 
 class SentenceVerticalListAdapter(
