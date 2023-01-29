@@ -58,6 +58,7 @@ class VideoListFragment : Fragment() {
         binding?.rvVideoList?.apply {
             adapter = videoListAdapter
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
+            itemAnimator = null
         }
 
         binding?.rvVideoList?.attachSnapHelperWithListener(SnapHelper().snapHelper,

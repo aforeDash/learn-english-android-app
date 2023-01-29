@@ -37,6 +37,7 @@ class CategoryListAdapter(
             rvSubCategory.apply {
                 adapter = subCategoryListAdapter
                 layoutManager = horizontalLayoutManager
+                itemAnimator = null
             }
         }
 

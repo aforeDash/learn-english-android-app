@@ -108,11 +108,13 @@ class PlayerFragment : Fragment() {
             binding?.rvSentenceList?.apply {
                 adapter = sentenceListAdapter
                 layoutManager = this@PlayerFragment.layoutManager
+                itemAnimator = null
             }
 
             binding?.rvSentenceVerticalList?.apply {
                 adapter = sentenceVerticalListAdapter
                 layoutManager = this@PlayerFragment.verticalLayoutManager
+                itemAnimator = null
             }
 
             binding?.rvSentenceList?.attachSnapHelperWithListener(SnapHelper().snapHelper,

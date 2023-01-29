@@ -34,7 +34,6 @@ class VideoListAdapter(
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_title)
         private val tvFirstSentence: TextView = itemView.findViewById(R.id.tv_first_sentence)
         private val ivThumbnail: YouTubeThumbnailView = itemView.findViewById(R.id.iv_thumbnail)
-        private val tvPlay: TextView = itemView.findViewById(R.id.tv_play)
 
         fun bind(
             context: Context,
@@ -49,7 +48,7 @@ class VideoListAdapter(
                     .into(ivThumbnail)
             }
 
-            tvPlay.setOnClickListener {
+            itemView.setOnClickListener {
                 val bundle = Bundle()
                 bundle.putString(DATA, DataConverter.fromVideoItemList(arrayListOf(videoItem)))
 

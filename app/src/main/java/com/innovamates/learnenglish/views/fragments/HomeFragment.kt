@@ -57,6 +57,7 @@ class HomeFragment : Fragment() {
         binding?.rvVideoList?.apply {
             adapter = categoryListAdapter
             layoutManager = LinearLayoutManager(context, VERTICAL, false)
+            itemAnimator = null
         }
 
         binding?.rvVideoList?.attachSnapHelperWithListener(SnapHelper().snapHelper,

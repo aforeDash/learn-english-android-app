@@ -6,14 +6,14 @@
     android:layout_height="match_parent"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
-    android:background="@drawable/border_shape_round"
+    android:background="@drawable/border_shape_round_white"
     android:padding="15dp">
 
     <ImageButton
         android:id="@+id/ib_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/visible_border_shape_round_grey"
+        android:background="@drawable/border_shape_round_black"
         android:padding="10dp"
         android:src="@drawable/ic_baseline_repeat_24"
         app:layout_constraintEnd_toEndOf="parent"

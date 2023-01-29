@@ -1,6 +1,7 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,8 +32,10 @@ class SentenceVerticalListAdapter(
             tvFirstSentence.text = sentence.sentence
             if (sentence.isPlaying) {
                 itemView.setBackgroundResource(R.drawable.border_shape_round_blue)
+                tvFirstSentence.setTextColor(Color.WHITE)
             } else {
-                itemView.setBackgroundResource(R.drawable.border_shape_round_grey)
+                itemView.setBackgroundResource(R.drawable.border_shape_round_white)
+                tvFirstSentence.setTextColor(Color.BLACK)
             }
         }
     }
