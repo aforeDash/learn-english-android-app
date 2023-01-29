@@ -3,85 +3,66 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="2dp"
-    android:layout_marginEnd="2dp"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_marginStart="10dp"
+    android:layout_marginEnd="10dp"
     android:background="@drawable/background_shape_round"
-    android:padding="20dp">
-
-    <TextView
-        android:id="@+id/tv_title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textColor="@color/black"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="This is a title" />
-
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cv_youtube_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="10dp"
-        app:cardCornerRadius="10dp"
-        app:cardElevation="0dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHeight_percent=".5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title" />
+    android:layout_marginBottom="10dp">
 
     <com.google.android.youtube.player.YouTubeThumbnailView
         android:id="@+id/iv_thumbnail"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="@color/black"
         android:contentDescription="@string/video_thumbnail"
-        app:layout_constraintBottom_toBottomOf="@+id/cv_youtube_container"
-        app:layout_constraintEnd_toEndOf="@+id/cv_youtube_container"
-        app:layout_constraintStart_toStartOf="@+id/cv_youtube_container"
-        app:layout_constraintTop_toTopOf="@+id/cv_youtube_container" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="match_parent"
+        android:id="@+id/tv_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         android:textColor="@color/black"
-        android:textSize="15sp"
+        android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cv_youtube_container"
+        app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
+        app:layout_constraintTop_toTopOf="parent"
         tools:text="This is a title" />
+
 
     <TextView
         android:id="@+id/tv_first_sentence"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:gravity="center"
+        android:layout_marginStart="10dp"
+        android:ellipsize="marquee"
+        android:singleLine="true"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_subtitle"
+        app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title"
         tools:text="This is a long and very long subtitle" />
 
     <TextView
         android:id="@+id/tv_play"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="48dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="5dp"
         android:background="@drawable/button_shape_round"
         android:gravity="center"
         android:text="@string/play"
         android:textColor="@color/white"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toEndOf="@+id/iv_thumbnail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_first_sentence" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

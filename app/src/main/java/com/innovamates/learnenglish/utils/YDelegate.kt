@@ -12,6 +12,8 @@ import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
 import com.innovamates.learnenglish.views.adapters.TAG
 
+
+
 fun setVideoThumbnail(
     videoId: String,
     ivThumbnail: YouTubeThumbnailView,

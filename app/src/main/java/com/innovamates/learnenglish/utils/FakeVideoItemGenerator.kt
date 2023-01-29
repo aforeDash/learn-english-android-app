@@ -4,7 +4,7 @@ import com.innovamates.learnenglish.data.models.Sentence
 import com.innovamates.learnenglish.data.database.videoitem.DbVideoItem
 
 object FakeVideoItemGenerator {
-    fun getVideoItems(): List<DbVideoItem> {
+    fun getVideoItems(id: Int): List<DbVideoItem> {
         val list = ArrayList<DbVideoItem>()
 
         val listOfSentences = ArrayList<Sentence>()
@@ -42,7 +42,7 @@ object FakeVideoItemGenerator {
         listOfSentences.add(sentence13)
         listOfSentences.add(sentence14)
 
-        val dbVideoItem1 = DbVideoItem(1,
+        val dbVideoItem1 = DbVideoItem(id,
             "Kung Fu Panda",
             "Oogway Ascends",
             "https://www.youtube.com/watch?v=1",

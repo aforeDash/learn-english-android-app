@@ -1,13 +1,18 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.innovamates.learnenglish.R
+import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.data.models.SubCategory
+import com.innovamates.learnenglish.utils.getNavigationAnimation
 
 class SubCategoryListAdapter(
     private val context: Context,
@@ -19,10 +24,38 @@ class SubCategoryListAdapter(
 
         private val tvSubCategoryName: TextView = itemView.findViewById(R.id.tv_sub_category_name)
 
+        private var subCategory: SubCategory? = null
+
+        init {
+            itemView.setOnClickListener {
+                subCategory?.let {
+                    val bundle = Bundle()
+                    bundle.putString(
+                        DATA,
+                        DataConverter.fromSubCategoryList(arrayListOf(it))
+                    )
+
+                    val navHostFragment =
+                        (itemView.context as AppCompatActivity).supportFragmentManager.findFragmentById(
+                            R.id.nav_host_fragment_activity_main
+                        ) as NavHostFragment
+                    val navController = navHostFragment.navController
+
+                    navController.navigate(
+                        R.id.navigation_video_list_fragment,
+                        bundle,
+                        navController.getNavigationAnimation()
+                    )
+                }
+            }
+        }
+
         fun bind(
             context: Context,
             subCategory: SubCategory,
         ) {
+            this.subCategory = subCategory
+
             tvSubCategoryName.text = subCategory.name
         }
     }

@@ -23,8 +23,12 @@ class VideoItemRepository(private val database: LearnEnglishDb) {
 //        }
 
         withContext(Dispatchers.IO) {
-            val vItems = FakeVideoItemGenerator.getVideoItems()
-            database.videoItemDao.insert(vItems)
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(1))
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(2))
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(3))
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(4))
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(5))
+            database.videoItemDao.insert(FakeVideoItemGenerator.getVideoItems(6))
         }
     }
 }

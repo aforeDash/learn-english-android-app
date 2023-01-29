@@ -29,4 +29,10 @@
         android:label=""
         tools:layout="@layout/fragment_player"/>
 
+    <fragment
+        android:id="@+id/navigation_video_list_fragment"
+        android:name="com.innovamates.learnenglish.views.fragments.VideoListFragment"
+        android:label=""
+        tools:layout="@layout/fragment_video_list"/>
+
 </navigation>

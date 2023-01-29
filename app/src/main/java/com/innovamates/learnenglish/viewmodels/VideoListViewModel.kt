@@ -2,13 +2,12 @@ package com.innovamates.learnenglish.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.innovamates.learnenglish.data.repository.CategoryRepository
 import com.innovamates.learnenglish.data.database.getDatabase
 import com.innovamates.learnenglish.data.repository.VideoItemRepository
 import kotlinx.coroutines.launch
 import java.io.IOException
 
-class SubCategoryViewModel(application: Application) : AndroidViewModel(application) {
+class VideoListViewModel(application: Application) : AndroidViewModel(application) {
 
     private var _eventNetworkError = MutableLiveData(false)
     val eventNetworkError: LiveData<Boolean>
@@ -49,9 +48,9 @@ class SubCategoryViewModel(application: Application) : AndroidViewModel(applicat
 
     class Factory(val app: Application) : ViewModelProvider.Factory {
         override fun <T : ViewModel> create(modelClass: Class<T>): T {
-            if (modelClass.isAssignableFrom(SubCategoryViewModel::class.java)) {
+            if (modelClass.isAssignableFrom(VideoListViewModel::class.java)) {
                 @Suppress("UNCHECKED_CAST")
-                return SubCategoryViewModel(app) as T
+                return VideoListViewModel(app) as T
             }
             throw IllegalArgumentException("Unable to construct viewmodel")
         }
