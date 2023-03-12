@@ -1,23 +1,14 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
-import com.innovamates.learnenglish.data.models.VideoItem
-import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.data.models.Category
-import com.innovamates.learnenglish.utils.getNavigationAnimation
-import com.innovamates.learnenglish.utils.setVideoThumbnail
 
 class CategoryListAdapter(
     private val context: Context,

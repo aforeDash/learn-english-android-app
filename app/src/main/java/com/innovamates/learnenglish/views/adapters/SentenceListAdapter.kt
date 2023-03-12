@@ -42,7 +42,7 @@ class SentenceListAdapter(
             current: Int,
             total: Int,
         ) {
-            tvFirstSentence.text = sentence.sentence
+            tvFirstSentence.text = sentence.words
 
             val pages = context.getString(R.string.pages)
                 .replace("#", (current + 1).toString())

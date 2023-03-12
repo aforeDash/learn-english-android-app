@@ -10,7 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.innovamates.learnenglish.R
-import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
+import com.innovamates.learnenglish.data.DataConverter
 import com.innovamates.learnenglish.data.models.SubCategory
 import com.innovamates.learnenglish.utils.getNavigationAnimation
 
@@ -32,7 +32,7 @@ class SubCategoryListAdapter(
                     val bundle = Bundle()
                     bundle.putString(
                         DATA,
-                        DataConverter.fromSubCategoryList(arrayListOf(it))
+                        DataConverter.fromSubCategory(it)
                     )
 
                     val navHostFragment =

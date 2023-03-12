@@ -4,19 +4,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.HORIZONTAL
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.innovamates.learnenglish.R
+import com.innovamates.learnenglish.data.DataConverter
+import com.innovamates.learnenglish.data.models.SubCategory
+import com.innovamates.learnenglish.data.models.VideoItem
 import com.innovamates.learnenglish.databinding.FragmentVideoListBinding
-import com.innovamates.learnenglish.utils.OnSnapPositionChangeListener
-import com.innovamates.learnenglish.utils.SnapHelper
-import com.innovamates.learnenglish.utils.SnapOnScrollListener
-import com.innovamates.learnenglish.utils.attachSnapHelperWithListener
+import com.innovamates.learnenglish.utils.*
 import com.innovamates.learnenglish.viewmodels.VideoListViewModel
 import com.innovamates.learnenglish.views.activities.hideNavView
 import com.innovamates.learnenglish.views.activities.showNavView
+import com.innovamates.learnenglish.views.adapters.DATA
 import com.innovamates.learnenglish.views.adapters.VideoListAdapter
 
 class VideoListFragment : Fragment() {
@@ -35,11 +40,35 @@ class VideoListFragment : Fragment() {
     }
 
     private lateinit var videoListAdapter: VideoListAdapter
+    private var subCategory: SubCategory? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         context?.let {
-            videoListAdapter = VideoListAdapter(it, arrayListOf())
+            videoListAdapter = VideoListAdapter(
+                it,
+                arrayListOf(),
+                object : VideoListAdapter.VideoItemClickListener {
+                    override fun onVideoItemClicked(videoItem: VideoItem) {
+                        videoListViewModel.getFullVideoData(videoItem.id)
+                            .observe(viewLifecycleOwner) { vi ->
+                                val bundle = Bundle()
+                                bundle.putString(DATA, DataConverter.fromVideoItem(vi))
+
+                                val navController =
+                                    requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+
+                                navController.navigate(
+                                    R.id.navigation_player_fragment,
+                                    bundle,
+                                    navController.getNavigationAnimation()
+                                )
+                            }
+                    }
+                })
+            subCategory = arguments?.getString(DATA)?.let { data ->
+                DataConverter.toSubCategory(data)
+            }
         }
     }
 
@@ -71,9 +100,13 @@ class VideoListFragment : Fragment() {
     }
 
     private fun observerData() {
-        videoListViewModel.videoItemList.observe(viewLifecycleOwner) {
-            it.forEachIndexed { index, videoItem ->
-                videoListAdapter.addItem(videoItem, index)
+        subCategory?.let {
+            videoListViewModel.getVideoData(it.id).observe(viewLifecycleOwner) { videoData ->
+                videoData.videoItems?.forEachIndexed { index, videoItem ->
+                    videoListAdapter.addItem(videoItem, index)
+                } ?: run {
+                    Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show()
+                }
             }
         }
     }
@@ -81,7 +114,6 @@ class VideoListFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-        videoListViewModel.videoItemList.removeObservers(viewLifecycleOwner)
     }
 
     override fun onStart() {

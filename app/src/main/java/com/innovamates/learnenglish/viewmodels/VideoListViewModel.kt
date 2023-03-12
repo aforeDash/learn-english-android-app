@@ -2,48 +2,21 @@ package com.innovamates.learnenglish.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.innovamates.learnenglish.data.database.getDatabase
+import com.innovamates.learnenglish.data.models.VideoData
+import com.innovamates.learnenglish.data.models.VideoItem
 import com.innovamates.learnenglish.data.repository.VideoItemRepository
-import kotlinx.coroutines.launch
 import java.io.IOException
 
 class VideoListViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _eventNetworkError = MutableLiveData(false)
-    val eventNetworkError: LiveData<Boolean>
-        get() = _eventNetworkError
+    private val videosRepository = VideoItemRepository()
 
-    private var _isNetworkErrorShown = MutableLiveData(false)
-    val isNetworkErrorShown: LiveData<Boolean>
-        get() = _isNetworkErrorShown
-
-
-    private val videosRepository = VideoItemRepository(getDatabase(application))
-
-    val videoItemList = videosRepository.videoItems
-
-
-    init {
-        refreshDataFromRepository()
+    fun getVideoData(id: Int): MutableLiveData<VideoData> {
+        return videosRepository.refreshVideoItems(id)
     }
 
-    private fun refreshDataFromRepository() {
-        viewModelScope.launch {
-            try {
-                videosRepository.refreshVideoItems()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-
-            } catch (networkError: IOException) {
-                // Show a Toast error message and hide the progress bar.
-                if (videoItemList.value.isNullOrEmpty())
-                    _eventNetworkError.value = true
-            }
-        }
-    }
-
-    fun onNetworkErrorShown() {
-        _isNetworkErrorShown.value = true
+    fun getFullVideoData(id: Int): MutableLiveData<VideoItem> {
+        return videosRepository.getFullVideoData(id)
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

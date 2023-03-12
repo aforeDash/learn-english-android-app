@@ -29,7 +29,7 @@ class SentenceVerticalListAdapter(
             current: Int,
             total: Int,
         ) {
-            tvFirstSentence.text = sentence.sentence
+            tvFirstSentence.text = sentence.words
             if (sentence.isPlaying) {
                 itemView.setBackgroundResource(R.drawable.border_shape_round_blue)
                 tvFirstSentence.setTextColor(Color.WHITE)

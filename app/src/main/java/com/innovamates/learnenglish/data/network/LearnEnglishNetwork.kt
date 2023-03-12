@@ -2,7 +2,9 @@ package com.innovamates.learnenglish.data.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.innovamates.learnenglish.data.network.networkdata.DataService
+import com.innovamates.learnenglish.data.models.VideoItem
+import com.innovamates.learnenglish.data.network.categorydata.CategoryService
+import com.innovamates.learnenglish.data.network.videodata.VideoItemService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -17,7 +19,10 @@ object LearnEnglishNetwork {
         .addConverterFactory(GsonConverterFactory.create(gson))
         .build()
 
-    val dataService: DataService =
-        retrofit.create(DataService::class.java)
+    val categoryService: CategoryService =
+        retrofit.create(CategoryService::class.java)
+
+    val videoItemService: VideoItemService =
+        retrofit.create(VideoItemService::class.java)
 
 }

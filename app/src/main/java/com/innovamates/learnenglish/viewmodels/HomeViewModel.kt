@@ -2,65 +2,14 @@ package com.innovamates.learnenglish.viewmodels
 
 import android.app.Application
 import androidx.lifecycle.*
-import com.innovamates.learnenglish.data.database.getDatabase
+import com.innovamates.learnenglish.data.models.CategoryData
 import com.innovamates.learnenglish.data.repository.CategoryRepository
-import com.innovamates.learnenglish.data.repository.VideoItemRepository
-import kotlinx.coroutines.launch
 import java.io.IOException
 
 class HomeViewModel(application: Application) : AndroidViewModel(application) {
 
-    private var _eventNetworkError = MutableLiveData(false)
-    val eventNetworkError: LiveData<Boolean>
-        get() = _eventNetworkError
-
-    private var _isNetworkErrorShown = MutableLiveData(false)
-    val isNetworkErrorShown: LiveData<Boolean>
-        get() = _isNetworkErrorShown
-
-    private val videoItemsRepository = VideoItemRepository(getDatabase(application))
-    private val categoriesRepository = CategoryRepository(getDatabase(application))
-
-    val videoItemList = videoItemsRepository.videoItems
-    val categoryList = categoriesRepository.categories
-
-    init {
-        refreshVideoItems()
-        refreshCategories()
-    }
-
-    private fun refreshCategories() {
-        viewModelScope.launch {
-            try {
-                categoriesRepository.refreshCategories()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-
-            } catch (networkError: IOException) {
-                // Show a Toast error message and hide the progress bar.
-                if (categoryList.value.isNullOrEmpty())
-                    _eventNetworkError.value = true
-            }
-        }
-    }
-
-    private fun refreshVideoItems() {
-        viewModelScope.launch {
-            try {
-                videoItemsRepository.refreshVideoItems()
-                _eventNetworkError.value = false
-                _isNetworkErrorShown.value = false
-
-            } catch (networkError: IOException) {
-                // Show a Toast error message and hide the progress bar.
-                if (videoItemList.value.isNullOrEmpty())
-                    _eventNetworkError.value = true
-            }
-        }
-    }
-
-    fun onNetworkErrorShown() {
-        _isNetworkErrorShown.value = true
+    fun getCategories(): MutableLiveData<CategoryData> {
+        return CategoryRepository().getCategories()
     }
 
     class Factory(val app: Application) : ViewModelProvider.Factory {

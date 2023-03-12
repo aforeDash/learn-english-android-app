@@ -9,16 +9,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
+import com.innovamates.learnenglish.data.DataConverter
 import com.innovamates.learnenglish.data.models.VideoItem
-import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.utils.getNavigationAnimation
-import com.innovamates.learnenglish.utils.setVideoThumbnail
 
 const val TAG = "VideoListAdapter"
 const val DATA = "Data"
@@ -26,6 +24,7 @@ const val DATA = "Data"
 class VideoListAdapter(
     private val context: Context,
     private val list: List<VideoItem>,
+    private val videoItemClickListener: VideoItemClickListener,
 ) :
     RecyclerView.Adapter<VideoListAdapter.ViewHolder>() {
 
@@ -38,29 +37,19 @@ class VideoListAdapter(
         fun bind(
             context: Context,
             videoItem: VideoItem,
+            videoItemClickListener: VideoItemClickListener,
         ) {
             tvTitle.text = videoItem.title
-            tvFirstSentence.text = videoItem.sentences[0].sentence
+            tvFirstSentence.text = videoItem.description
 
             Handler(Looper.getMainLooper()).post {
                 Glide.with(context)
-                    .load("https://img.youtube.com/vi/${videoItem.videoId}/0.jpg")
+                    .load("https://img.youtube.com/vi/${videoItem.youtube_id}/0.jpg")
                     .into(ivThumbnail)
             }
 
             itemView.setOnClickListener {
-                val bundle = Bundle()
-                bundle.putString(DATA, DataConverter.fromVideoItemList(arrayListOf(videoItem)))
-
-                val navHostFragment =
-                    (context as AppCompatActivity).supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
-                val navController = navHostFragment.navController
-
-                navController.navigate(
-                    R.id.navigation_player_fragment,
-                    bundle,
-                    navController.getNavigationAnimation()
-                )
+                videoItemClickListener.onVideoItemClicked(videoItem)
             }
         }
     }
@@ -72,7 +61,7 @@ class VideoListAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.bind(context, list[position])
+        holder.bind(context, list[position], videoItemClickListener)
     }
 
     override fun getItemCount(): Int {
@@ -87,5 +76,9 @@ class VideoListAdapter(
             (list as ArrayList).add(index, videoItem)
             notifyItemInserted(index)
         }
+    }
+
+    interface VideoItemClickListener {
+        fun onVideoItemClicked(videoItem: VideoItem)
     }
 }

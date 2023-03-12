@@ -14,8 +14,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.youtube.player.MyYoutubePlayer
 import com.google.android.youtube.player.YouTubePlayer.PlaybackEventListener
 import com.innovamates.learnenglish.databinding.FragmentPlayerBinding
+import com.innovamates.learnenglish.data.DataConverter
 import com.innovamates.learnenglish.data.models.VideoItem
-import com.innovamates.learnenglish.data.database.typeconverter.DataConverter
 import com.innovamates.learnenglish.utils.*
 import com.innovamates.learnenglish.viewmodels.PlayerViewModel
 import com.innovamates.learnenglish.views.activities.MainActivity
@@ -211,21 +211,21 @@ class PlayerFragment : Fragment() {
             videoItem?.let { videoItem ->
 
                 animator = ValueAnimator.ofInt(
-                    videoItem.videoStartTimeSec.toInt() * 1000,
-                    videoItem.videoEndTimeSec.toInt() * 1000
+                    videoItem.startTimeSec * 1000,
+                    videoItem.endTimeSec * 1000
                 )
                 animator?.duration =
-                    (videoItem.videoEndTimeSec - videoItem.videoStartTimeSec) * 1000
+                    ((videoItem.endTimeSec - videoItem.startTimeSec) * 1000).toLong()
 
                 binding?.progressBar?.max =
-                    ((videoItem.videoEndTimeSec - videoItem.videoStartTimeSec) * 1000).toInt()
+                    ((videoItem.endTimeSec - videoItem.startTimeSec) * 1000)
 
                 animator?.addListener(object : AnimatorListenerAdapter() {
                     override fun onAnimationEnd(animation: Animator, isReverse: Boolean) {
                         super.onAnimationEnd(animation, isReverse)
                         context?.let {
                             youtubePlayer.pause()
-                            youtubePlayer.seekToMillis((videoItem.videoStartTimeSec * 1000).toInt())
+                            youtubePlayer.seekToMillis((videoItem.startTimeSec * 1000).toInt())
                         }
                     }
 
@@ -289,8 +289,8 @@ class PlayerFragment : Fragment() {
                     }
 
                 })
-                youtubePlayer.loadVideo(videoItem.videoId)
-                youtubePlayer.seekToMillis((videoItem.videoStartTimeSec * 1000).toInt())
+                youtubePlayer.loadVideo(videoItem.youtube_id)
+                youtubePlayer.seekToMillis((videoItem.startTimeSec * 1000))
             }
         }
     }
@@ -305,12 +305,12 @@ class PlayerFragment : Fragment() {
     private fun setupVideoData() {
         videoItem = arguments?.let { it ->
             it.getString(DATA)?.let {
-                DataConverter.toVideoItemList(it)[0]
+                DataConverter.toVideoItem(it)
             }
         }
 
         videoItem?.let {
-            it.sentences.forEachIndexed { index, sentence ->
+            it.sentences?.forEachIndexed { index, sentence ->
                 indexMap[sentence.startTimeSec] = index
             }
         }
