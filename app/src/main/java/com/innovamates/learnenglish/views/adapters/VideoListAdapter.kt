@@ -1,22 +1,20 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
-import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
-import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
-import com.innovamates.learnenglish.data.DataConverter
 import com.innovamates.learnenglish.data.models.VideoItem
-import com.innovamates.learnenglish.utils.getNavigationAnimation
+import com.innovamates.learnenglish.utils.ThumbnailViewer
+import com.innovamates.learnenglish.views.fragments.VideoListFragment
 
 const val TAG = "VideoListAdapter"
 const val DATA = "Data"
@@ -25,14 +23,19 @@ class VideoListAdapter(
     private val context: Context,
     private val list: List<VideoItem>,
     private val videoItemClickListener: VideoItemClickListener,
+    private val fragment: VideoListFragment,
 ) :
     RecyclerView.Adapter<VideoListAdapter.ViewHolder>() {
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(
+        itemView: View,
+        private val thumbnailViewer: ThumbnailViewer,
+        private val fragment: VideoListFragment,
+    ) : RecyclerView.ViewHolder(itemView) {
 
         private val tvTitle: TextView = itemView.findViewById(R.id.tv_title)
         private val tvFirstSentence: TextView = itemView.findViewById(R.id.tv_first_sentence)
-        private val ivThumbnail: YouTubeThumbnailView = itemView.findViewById(R.id.iv_thumbnail)
+        private val ivThumbnail: ImageView = itemView.findViewById(R.id.iv_thumbnail)
 
         fun bind(
             context: Context,
@@ -42,11 +45,7 @@ class VideoListAdapter(
             tvTitle.text = videoItem.title
             tvFirstSentence.text = videoItem.description
 
-            Handler(Looper.getMainLooper()).post {
-                Glide.with(context)
-                    .load("https://img.youtube.com/vi/${videoItem.youtube_id}/0.jpg")
-                    .into(ivThumbnail)
-            }
+            thumbnailViewer.start(videoItem.youtube_id, ivThumbnail, fragment)
 
             itemView.setOnClickListener {
                 videoItemClickListener.onVideoItemClicked(videoItem)
@@ -57,7 +56,8 @@ class VideoListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.single_video_list_item, parent, false)
-        return ViewHolder(view)
+        val thumbnailViewer = ThumbnailViewer(context)
+        return ViewHolder(view, thumbnailViewer, fragment)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

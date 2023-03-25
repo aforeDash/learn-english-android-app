@@ -65,7 +65,7 @@ class VideoListFragment : Fragment() {
                                 )
                             }
                     }
-                })
+                }, this)
             subCategory = arguments?.getString(DATA)?.let { data ->
                 DataConverter.toSubCategory(data)
             }
