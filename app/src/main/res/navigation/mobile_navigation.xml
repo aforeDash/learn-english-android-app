@@ -35,4 +35,11 @@
         android:label=""
         tools:layout="@layout/fragment_video_list"/>
 
+    <fragment
+        android:id="@+id/navigation_sub_category_fragment"
+        android:name="com.innovamates.learnenglish.views.fragments.SubCategoryFragment"
+        android:label=""
+        tools:layout="@layout/fragment_sub_category"/>
+
+
 </navigation>

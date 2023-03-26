@@ -1,14 +1,19 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.innovamates.learnenglish.R
+import com.innovamates.learnenglish.data.DataConverter
 import com.innovamates.learnenglish.data.models.Category
+import com.innovamates.learnenglish.utils.getNavigationAnimation
 
 class CategoryListAdapter(
     private val context: Context,
@@ -38,6 +43,26 @@ class CategoryListAdapter(
         ) {
             tvCategoryName.text = category.name
             subCategoryListAdapter.addItem(category.sub_categories)
+
+            tvCategoryName.setOnClickListener {
+                val bundle = Bundle()
+                bundle.putString(
+                    DATA,
+                    DataConverter.fromSubCategoryList(category.sub_categories)
+                )
+
+                val navHostFragment =
+                    (itemView.context as AppCompatActivity).supportFragmentManager.findFragmentById(
+                        R.id.nav_host_fragment_activity_main
+                    ) as NavHostFragment
+                val navController = navHostFragment.navController
+
+                navController.navigate(
+                    R.id.navigation_sub_category_fragment,
+                    bundle,
+                    navController.getNavigationAnimation()
+                )
+            }
         }
     }
 

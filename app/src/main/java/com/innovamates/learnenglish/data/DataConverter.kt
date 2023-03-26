@@ -31,5 +31,17 @@ class DataConverter {
             val type = object : TypeToken<SubCategory>() {}.type
             return gson.fromJson(value, type)
         }
+
+        fun fromSubCategoryList(value: List<SubCategory>): String {
+            val gson = Gson()
+            val type = object : TypeToken<List<SubCategory>>() {}.type
+            return gson.toJson(value, type)
+        }
+
+        fun toSubCategoryList(value: String): List<SubCategory> {
+            val gson = Gson()
+            val type = object : TypeToken<List<SubCategory>>() {}.type
+            return gson.fromJson(value, type)
+        }
     }
 }
