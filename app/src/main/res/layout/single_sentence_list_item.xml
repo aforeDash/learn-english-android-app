@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginStart="2dp"
     android:layout_marginEnd="2dp"
-    android:background="@drawable/border_shape_round_white"
+    android:background="@drawable/border_shape_round_grey"
     android:padding="15dp">
 
     <ImageButton
@@ -23,9 +23,11 @@
         android:id="@+id/tv_first_sentence"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:lines="6"
         android:maxLines="6"
-        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textColor="@color/white"
         android:textSize="17sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -37,6 +39,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
+        android:textColor="@color/white"
         android:textSize="15sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/ib_repeat"

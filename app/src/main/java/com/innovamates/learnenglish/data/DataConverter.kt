@@ -1,9 +1,7 @@
 package com.innovamates.learnenglish.data
 
-import androidx.room.TypeConverter
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.innovamates.learnenglish.data.models.Sentence
 import com.innovamates.learnenglish.data.models.SubCategory
 import com.innovamates.learnenglish.data.models.VideoItem
 

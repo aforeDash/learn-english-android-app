@@ -4,12 +4,15 @@
         <item name="android:statusBarColor">@color/colorBackground</item>
         <!-- Customize your theme here. -->
 
-        <item name="android:windowSplashScreenBackground" tools:targetApi="s">@color/white</item>
+        <item name="android:windowSplashScreenBackground" tools:targetApi="s">
+            @color/colorBackground
+        </item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
             @drawable/ic_dashboard_black_24dp
         </item>
 
-        <item name="android:windowLightStatusBar" tools:targetApi="m">true</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
+        <item name="android:textColorPrimary">@color/white</item>
     </style>
 
     <style name="Theme.LearnEnglish.NoActionBar">
@@ -19,7 +22,7 @@
 
     <style name="Theme.App.Starting" parent="Theme.SplashScreen">
         <!-- Set the splash screen background, animated icon, and animation duration. -->
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/colorBackground</item>
 
         <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
              animated drawable. One of these is required. -->
@@ -29,7 +32,7 @@
         <!--The attribute postSplashScreenTheme sets the theme that
         applies after the splash screen has dismissed. This is also
         the theme set in the launcher activity in AndroidManifest.xml.-->
-        <item name="postSplashScreenTheme">@style/Theme.LearnEnglish.NoActionBar</item>
+        <item name="postSplashScreenTheme">@style/Theme.LearnEnglish</item>
 
     </style>
 </resources>

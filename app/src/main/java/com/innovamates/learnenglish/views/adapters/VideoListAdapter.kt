@@ -1,16 +1,12 @@
 package com.innovamates.learnenglish.views.adapters
 
 import android.content.Context
-import android.os.Handler
-import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
-import com.google.android.youtube.player.YouTubeThumbnailView
 import com.innovamates.learnenglish.R
 import com.innovamates.learnenglish.data.models.VideoItem
 import com.innovamates.learnenglish.utils.ThumbnailViewer

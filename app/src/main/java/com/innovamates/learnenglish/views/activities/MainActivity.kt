@@ -1,18 +1,20 @@
 package com.innovamates.learnenglish.views.activities
 
 import android.content.Context
-import android.net.ConnectivityManager.OnNetworkActiveListener
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.youtube.player.MyYoutubePlayer
 import com.innovamates.learnenglish.R
 import com.innovamates.learnenglish.databinding.ActivityMainBinding
 import com.innovamates.learnenglish.utils.NotificationBarMovedListener
@@ -22,19 +24,20 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
     lateinit var navView: BottomNavigationView
-    lateinit var myYoutubePlayer: MyYoutubePlayer
 
     var notificationBarMovedListener: NotificationBarMovedListener? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        installSplashScreen()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setSupportActionBar(binding.toolbar)
 
         navView = binding.navView
-        initYoutubePlayer()
 
         val navHostFragment =
             supportFragmentManager.findFragmentById(R.id.nav_host_fragment_activity_main) as NavHostFragment
@@ -49,18 +52,10 @@ class MainActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    private fun initYoutubePlayer() {
-        myYoutubePlayer = MyYoutubePlayer(this)
-    }
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_activity_main)
         return navController.navigateUp() || super.onSupportNavigateUp()
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        myYoutubePlayer.youtubePlayer.release()
     }
 
     override fun onWindowFocusChanged(hasFocus: Boolean) {
@@ -75,14 +70,6 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
     }
 
-
-}
-
-fun Context.getMyYoutubePlayer(): MyYoutubePlayer? {
-    if (this is MainActivity) {
-        return myYoutubePlayer
-    }
-    return null
 }
 
 fun Context.hideNavView() {

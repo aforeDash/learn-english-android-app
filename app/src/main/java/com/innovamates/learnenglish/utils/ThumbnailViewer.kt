@@ -29,7 +29,7 @@ class ThumbnailViewer(
                 loadThumbnail(imageView, youtubeId, index)
                 index = (index + 1) % 4
                 if (fragment.isVisible)
-                    handler.postDelayed(this, 3000)
+                    handler.postDelayed(this, 2000)
                 else {
                     handler.removeCallbacks(this)
                 }
