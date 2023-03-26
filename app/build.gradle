@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.innovamates.learnenglish'
+    namespace 'com.aforeapps.learnenglish'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.innovamates.learnenglish"
+        applicationId "com.aforeapps.learnenglish"
         minSdk 21
         targetSdk 33
         versionCode 1

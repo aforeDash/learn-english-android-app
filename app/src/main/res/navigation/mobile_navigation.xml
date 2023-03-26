@@ -7,37 +7,37 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.innovamates.learnenglish.views.fragments.HomeFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_favorite"
-        android:name="com.innovamates.learnenglish.views.fragments.FavoriteFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.FavoriteFragment"
         android:label="@string/title_favorite"
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.innovamates.learnenglish.views.fragments.NotificationsFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
         android:id="@+id/navigation_player_fragment"
-        android:name="com.innovamates.learnenglish.views.fragments.PlayerFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.PlayerFragment"
         android:label=""
         tools:layout="@layout/fragment_player"/>
 
     <fragment
         android:id="@+id/navigation_video_list_fragment"
-        android:name="com.innovamates.learnenglish.views.fragments.VideoListFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.VideoListFragment"
         android:label=""
         tools:layout="@layout/fragment_video_list"/>
 
     <fragment
         android:id="@+id/navigation_sub_category_fragment"
-        android:name="com.innovamates.learnenglish.views.fragments.SubCategoryFragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.SubCategoryFragment"
         android:label=""
         tools:layout="@layout/fragment_sub_category"/>
 
