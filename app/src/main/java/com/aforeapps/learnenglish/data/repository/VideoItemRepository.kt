@@ -15,6 +15,7 @@ class VideoItemRepository {
             .enqueue(object : retrofit2.Callback<VideoData> {
                 override fun onFailure(call: retrofit2.Call<VideoData>, t: Throwable) {
                     Log.e("VideoItemRepository", "Failed to get video items", t)
+                    networkVideoData.postValue(null)
                 }
 
                 override fun onResponse(
@@ -25,8 +26,11 @@ class VideoItemRepository {
                         val videoData = response.body()
                         videoData?.let {
                             networkVideoData.postValue(it)
-                        }
+                        } ?: networkVideoData.postValue(null)
+                    } else {
+                        networkVideoData.postValue(null)
                     }
+
                 }
             })
 
@@ -40,6 +44,7 @@ class VideoItemRepository {
             .enqueue(object : retrofit2.Callback<SingleVideoData> {
                 override fun onFailure(call: retrofit2.Call<SingleVideoData>, t: Throwable) {
                     Log.e("VideoItemRepository", "Failed to get video items", t)
+                    networkFullVideoItem.postValue(null)
                 }
 
                 override fun onResponse(
@@ -50,7 +55,9 @@ class VideoItemRepository {
                         val videoItem = response.body()
                         videoItem?.let {
                             networkFullVideoItem.postValue(it.videoItem)
-                        }
+                        } ?: networkFullVideoItem.postValue(null)
+                    } else {
+                        networkFullVideoItem.postValue(null)
                     }
                 }
             })
@@ -65,6 +72,7 @@ class VideoItemRepository {
             .enqueue(object : retrofit2.Callback<SingleVideoData> {
                 override fun onFailure(call: retrofit2.Call<SingleVideoData>, t: Throwable) {
                     Log.e("VideoItemRepository", "Failed to get video items", t)
+                    networkFullVideoItem.postValue(null)
                 }
 
                 override fun onResponse(
@@ -75,8 +83,9 @@ class VideoItemRepository {
                         val videoItem = response.body()
                         videoItem?.let {
                             networkFullVideoItem.postValue(it.videoItem)
-                        }
+                        } ?: networkFullVideoItem.postValue(null)
                     }
+                    networkFullVideoItem.postValue(null)
                 }
             })
 

@@ -65,15 +65,27 @@ class HomeFragment : Fragment() {
                 override fun onSnapPositionChange(position: Int) {}
             })
 
+        binding?.btReload?.setOnClickListener {
+            observerData()
+        }
+
         observerData()
     }
 
     private fun observerData() {
+        binding?.progressMain?.visibility = View.VISIBLE
         homeViewModel.getCategories().observe(viewLifecycleOwner) {
-            it.categories?.forEachIndexed { index, category ->
+            it?.categories?.forEachIndexed { index, category ->
                 categoryListAdapter.addItem(category, index)
             } ?: run {
-                Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
+            }
+            binding?.progressMain?.visibility = View.GONE
+
+            if (it == null) {
+                binding?.error?.visibility = View.VISIBLE
+            } else {
+                binding?.error?.visibility = View.GONE
             }
         }
     }

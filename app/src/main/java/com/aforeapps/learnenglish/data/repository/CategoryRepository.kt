@@ -17,18 +17,14 @@ class CategoryRepository {
             .enqueue(object : retrofit2.Callback<CategoryData> {
                 override fun onFailure(call: Call<CategoryData>, t: Throwable) {
                     Log.e("CategoryRepository", "Failed to get categories", t)
+                    networkCategoryData.postValue(null)
                 }
 
                 override fun onResponse(
                     call: Call<CategoryData>,
                     response: Response<CategoryData>,
                 ) {
-                    if (response.isSuccessful) {
-                        val categoryData = response.body()
-                        if (categoryData != null) {
-                            networkCategoryData.postValue(categoryData)
-                        }
-                    }
+                    networkCategoryData.postValue(response.body())
                 }
             })
 

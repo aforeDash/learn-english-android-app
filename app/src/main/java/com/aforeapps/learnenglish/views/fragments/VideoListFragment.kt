@@ -50,20 +50,23 @@ class VideoListFragment : Fragment() {
                     override fun onVideoItemClicked(videoItem: VideoItem) {
                         videoListViewModel.getFullVideoData(videoItem.id)
                             .observe(viewLifecycleOwner) { vi ->
-                                val bundle = Bundle()
-                                bundle.putString(DATA, DataConverter.fromVideoItem(vi))
+                                vi?.let {
+                                    val bundle = Bundle()
+                                    bundle.putString(DATA, DataConverter.fromVideoItem(vi))
 
-                                val navController =
-                                    requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+                                    val navController =
+                                        requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
 
-                                navController.navigate(
-                                    R.id.navigation_player_fragment,
-                                    bundle,
-                                    navController.getNavigationAnimation()
-                                )
+                                    navController.navigate(
+                                        R.id.navigation_player_fragment,
+                                        bundle,
+                                        navController.getNavigationAnimation()
+                                    )
+                                }
                             }
                     }
-                }, this)
+                }, this
+            )
             subCategory = arguments?.getString(DATA)?.let { data ->
                 DataConverter.toSubCategory(data)
             }
@@ -94,16 +97,30 @@ class VideoListFragment : Fragment() {
                 override fun onSnapPositionChange(position: Int) {}
             })
 
+        binding?.btReload?.setOnClickListener {
+            observerData()
+        }
+
         observerData()
     }
 
     private fun observerData() {
+        binding?.progressMain?.visibility = View.VISIBLE
         subCategory?.let {
             videoListViewModel.getVideoData(it.id).observe(viewLifecycleOwner) { videoData ->
-                videoData.videoItems?.forEachIndexed { index, videoItem ->
+                videoData?.videoItems?.forEachIndexed { index, videoItem ->
                     videoListAdapter.addItem(videoItem, index)
                 } ?: run {
-                    Toast.makeText(context, "No data found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
+                }
+                binding?.progressMain?.visibility = View.GONE
+
+                if (videoData.videoItems == null ||
+                    videoData.videoItems.isEmpty()
+                ) {
+                    binding?.error?.visibility = View.VISIBLE
+                } else {
+                    binding?.error?.visibility = View.GONE
                 }
             }
         }
