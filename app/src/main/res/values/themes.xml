@@ -8,7 +8,7 @@
             @color/colorBackground
         </item>
         <item name="android:windowSplashScreenAnimatedIcon" tools:targetApi="s">
-            @drawable/ic_dashboard_black_24dp
+            @drawable/app_icon
         </item>
 
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
@@ -26,7 +26,7 @@
 
         <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
              animated drawable. One of these is required. -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/ic_dashboard_black_24dp</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
 
 
         <!--The attribute postSplashScreenTheme sets the theme that

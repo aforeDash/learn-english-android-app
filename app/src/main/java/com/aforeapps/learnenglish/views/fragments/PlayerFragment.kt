@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.DataConverter
@@ -63,15 +64,31 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
         setupVideoData()
 
         videoItem?.let {
-            sentenceListAdapter = SentenceListAdapter(requireContext(), it.sentences)
-            sentenceVerticalListAdapter =
-                SentenceVerticalListAdapter(requireContext(), it.sentences)
-
-            layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-            verticalLayoutManager =
-                LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
+            prepareSentence(it)
         }
+    }
 
+    private fun collectVideoItem() {
+        binding?.progressMain?.visibility = View.VISIBLE
+        viewModel.getRandomVideoData()
+            .observe(viewLifecycleOwner) { vi ->
+                vi?.let {
+                    videoItem = vi
+                    prepareSentence(vi)
+                    initNow()
+                }
+                binding?.progressMain?.visibility = View.GONE
+            }
+    }
+
+    private fun prepareSentence(it: VideoItem) {
+        sentenceListAdapter = SentenceListAdapter(requireContext(), it.sentences)
+        sentenceVerticalListAdapter =
+            SentenceVerticalListAdapter(requireContext(), it.sentences)
+
+        layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        verticalLayoutManager =
+            LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
     }
 
     override fun onCreateView(
@@ -84,25 +101,24 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        setupVideoPlayer()
-        initRecyclerView()
-
-        initNotificationBarMoveListener()
+        videoItem?.let {
+            initNow()
+        } ?: run {
+            initFab()
+            collectVideoItem()
+        }
     }
 
-    private fun initNotificationBarMoveListener() {
-//        activity?.let {
-//            if (it is MainActivity) {
-//                it.notificationBarMovedListener = object : NotificationBarMovedListener {
-//                    override fun onNotificationPullDown() {
-//                        context?.getMyYoutubePlayer()?.let { myPlayer ->
-//                            pausePlaying(myPlayer)
-//                        }
-//                    }
-//                }
-//            }
-//        }
+    private fun initFab() {
+        binding?.fab?.visibility = View.VISIBLE
+        binding?.fab?.setOnClickListener {
+            collectVideoItem()
+        }
+    }
+
+    private fun initNow() {
+        setupVideoPlayer()
+        initRecyclerView()
     }
 
     private fun initRecyclerView() {
@@ -192,18 +208,22 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
 
     private fun setupVideoPlayer() {
         view?.let {
-            youtubePlayerView = requireView().findViewById(R.id.yt_player)
+            if (youTubePlayer == null) {
+                youtubePlayerView = requireView().findViewById(R.id.yt_player)
 
-            val iFramePlayerOptions: IFramePlayerOptions = IFramePlayerOptions.Builder()
-                .controls(0)
-                .rel(0)
-                .ivLoadPolicy(0)
-                .ccLoadPolicy(0)
-                .build()
+                val iFramePlayerOptions: IFramePlayerOptions = IFramePlayerOptions.Builder()
+                    .controls(0)
+                    .rel(0)
+                    .ivLoadPolicy(0)
+                    .ccLoadPolicy(0)
+                    .build()
 
-            lifecycle.addObserver(youtubePlayerView)
+                lifecycle.addObserver(youtubePlayerView)
 
-            youtubePlayerView.initialize(this, true, iFramePlayerOptions)
+                youtubePlayerView.initialize(this, true, iFramePlayerOptions)
+            } else {
+                initVideoPlaying()
+            }
         }
     }
 
@@ -222,18 +242,21 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
     }
 
     override fun onDestroyView() {
-//        animator?.cancel()
         super.onDestroyView()
         _binding = null
     }
 
     override fun onStart() {
-        context?.hideNavView()
+        arguments?.let {
+            context?.hideNavView()
+        }
         super.onStart()
     }
 
     override fun onStop() {
-        context?.showNavView()
+        arguments?.let {
+            context?.showNavView()
+        }
         super.onStop()
     }
 

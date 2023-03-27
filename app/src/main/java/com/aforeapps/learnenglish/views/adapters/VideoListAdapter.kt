@@ -9,8 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.models.VideoItem
-import com.aforeapps.learnenglish.utils.ThumbnailViewer
 import com.aforeapps.learnenglish.views.fragments.VideoListFragment
+import com.bumptech.glide.Glide
 
 const val TAG = "VideoListAdapter"
 const val DATA = "Data"
@@ -25,7 +25,6 @@ class VideoListAdapter(
 
     class ViewHolder(
         itemView: View,
-        private val thumbnailViewer: ThumbnailViewer,
         private val fragment: VideoListFragment,
     ) : RecyclerView.ViewHolder(itemView) {
 
@@ -41,7 +40,9 @@ class VideoListAdapter(
             tvTitle.text = videoItem.title
             tvFirstSentence.text = videoItem.description
 
-            thumbnailViewer.start(videoItem.youtube_id, ivThumbnail, fragment)
+            Glide.with(context)
+                .load("https://img.youtube.com/vi/${videoItem.youtube_id}/${0}.jpg")
+                .into(ivThumbnail)
 
             itemView.setOnClickListener {
                 videoItemClickListener.onVideoItemClicked(videoItem)
@@ -52,8 +53,7 @@ class VideoListAdapter(
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
             .inflate(R.layout.single_video_list_item, parent, false)
-        val thumbnailViewer = ThumbnailViewer(context)
-        return ViewHolder(view, thumbnailViewer, fragment)
+        return ViewHolder(view, fragment)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

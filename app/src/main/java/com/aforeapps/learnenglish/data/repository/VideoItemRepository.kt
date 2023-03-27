@@ -58,10 +58,10 @@ class VideoItemRepository {
         return networkFullVideoItem
     }
 
-    fun getRandomVideoData(id: Int): MutableLiveData<VideoItem> {
+    fun getRandomVideoData(): MutableLiveData<VideoItem> {
         val networkFullVideoItem: MutableLiveData<VideoItem> = MutableLiveData()
 
-        LearnEnglishNetwork.videoItemService.getFullVideoItem(id)
+        LearnEnglishNetwork.videoItemService.getRandomVideoItem()
             .enqueue(object : retrofit2.Callback<SingleVideoData> {
                 override fun onFailure(call: retrofit2.Call<SingleVideoData>, t: Throwable) {
                     Log.e("VideoItemRepository", "Failed to get video items", t)

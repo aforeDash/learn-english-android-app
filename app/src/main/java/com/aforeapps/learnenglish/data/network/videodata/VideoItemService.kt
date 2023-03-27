@@ -14,5 +14,5 @@ interface VideoItemService {
     fun getFullVideoItem(@Path("id") videoId: Int): Call<SingleVideoData>
 
     @GET("api/v1/random-video")
-    fun getRandomVideoItem(@Path("id") videoId: Int): Call<SingleVideoData>
+    fun getRandomVideoItem(): Call<SingleVideoData>
 }

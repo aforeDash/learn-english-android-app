@@ -24,22 +24,28 @@
         tools:layout="@layout/fragment_notifications" />
 
     <fragment
+        android:id="@+id/navigation_random_player_fragment"
+        android:name="com.aforeapps.learnenglish.views.fragments.PlayerFragment"
+        android:label="@string/random_videos"
+        tools:layout="@layout/fragment_player" />
+
+    <fragment
         android:id="@+id/navigation_player_fragment"
         android:name="com.aforeapps.learnenglish.views.fragments.PlayerFragment"
         android:label=""
-        tools:layout="@layout/fragment_player"/>
+        tools:layout="@layout/fragment_player" />
 
     <fragment
         android:id="@+id/navigation_video_list_fragment"
         android:name="com.aforeapps.learnenglish.views.fragments.VideoListFragment"
         android:label=""
-        tools:layout="@layout/fragment_video_list"/>
+        tools:layout="@layout/fragment_video_list" />
 
     <fragment
         android:id="@+id/navigation_sub_category_fragment"
         android:name="com.aforeapps.learnenglish.views.fragments.SubCategoryFragment"
         android:label=""
-        tools:layout="@layout/fragment_sub_category"/>
+        tools:layout="@layout/fragment_sub_category" />
 
 
 </navigation>

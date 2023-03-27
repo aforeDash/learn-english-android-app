@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "898188937836",
+    "project_id": "masiur-billable-gcp",
+    "storage_bucket": "masiur-billable-gcp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:898188937836:android:6b3146d2f7940406076649",
+        "android_client_info": {
+          "package_name": "com.aforeapps.learnenglish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "898188937836-bpeset8p4hmp3sp7uq0idug00e4pj6c2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCJ9369UxqC3xRKNl-3q7kkWkZWsMg8e0o"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "898188937836-bpeset8p4hmp3sp7uq0idug00e4pj6c2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
