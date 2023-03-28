@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.models.Sentence
@@ -31,11 +32,11 @@ class SentenceVerticalListAdapter(
         ) {
             tvFirstSentence.text = sentence.words.trim()
             if (sentence.isPlaying) {
-                itemView.setBackgroundResource(R.drawable.border_shape_round_blue)
-                tvFirstSentence.setTextColor(Color.WHITE)
+                itemView.setBackgroundResource(R.drawable.border_shape_round_light_grey)
+                tvFirstSentence.setTextColor(ContextCompat.getColor(context, R.color.white))
             } else {
-                itemView.setBackgroundResource(R.drawable.border_shape_round_white)
-                tvFirstSentence.setTextColor(Color.BLACK)
+                itemView.setBackgroundResource(R.drawable.border_shape_round_grey)
+                tvFirstSentence.setTextColor(ContextCompat.getColor(context, R.color.dark_white))
             }
         }
     }

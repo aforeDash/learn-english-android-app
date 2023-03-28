@@ -10,6 +10,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.DataConverter
 import com.aforeapps.learnenglish.data.models.SubCategory
+import com.aforeapps.learnenglish.views.activities.hideNavView
+import com.aforeapps.learnenglish.views.activities.showNavView
 import com.aforeapps.learnenglish.views.adapters.DATA
 import com.aforeapps.learnenglish.views.adapters.SubCategoryListAdapter
 
@@ -51,5 +53,19 @@ class SubCategoryFragment : Fragment() {
                 layoutManager = GridLayoutManager(context, 3)
             }
         }
+    }
+
+    override fun onStart() {
+        arguments?.let {
+            context?.hideNavView()
+        }
+        super.onStart()
+    }
+
+    override fun onStop() {
+        arguments?.let {
+            context?.showNavView()
+        }
+        super.onStop()
     }
 }

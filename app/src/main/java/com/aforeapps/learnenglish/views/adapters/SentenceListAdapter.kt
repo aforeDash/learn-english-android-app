@@ -56,9 +56,9 @@ class SentenceListAdapter(
 
         private fun setupRepeat(ibRepeat: ImageButton) {
             if (repeatEnabled) {
-                ibRepeat.setBackgroundResource(R.drawable.border_shape_round_blue)
+                ibRepeat.setBackgroundResource(R.drawable.repeat_button_bg_selected)
             } else {
-                ibRepeat.setBackgroundResource(R.drawable.border_shape_round_black)
+                ibRepeat.setBackgroundResource(R.drawable.repeat_button_bg_not_selected)
             }
         }
     }

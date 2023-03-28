@@ -3,12 +3,8 @@
     <string name="title_home">Categories</string>
     <string name="title_favorite">Arbitrary</string>
     <string name="title_notifications">Notifications</string>
-    <string name="this_is_a_sample_text">This is a sample text</string>
-    <string name="learning_with_entertainment">Learning with Entertainment</string>
-    <string name="play">Play</string>
     <string name="video_thumbnail">Video thumbnail</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="pages">#/$</string>
     <string name="random_videos">Arbitrary</string>
 </resources>

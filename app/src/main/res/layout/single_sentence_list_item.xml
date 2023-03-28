@@ -13,8 +13,11 @@
         android:id="@+id/ib_repeat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/border_shape_round_black"
-        android:padding="10dp"
+        android:background="@drawable/repeat_button_bg_not_selected"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp"
         android:src="@drawable/ic_baseline_repeat_24"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_first_sentence" />

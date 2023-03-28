@@ -1,8 +1,11 @@
 package com.aforeapps.learnenglish.views.fragments
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.OnBackPressedCallback
@@ -49,6 +52,8 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
 
     private var youTubePlayer: YouTubePlayer? = null
 
+    private var isPlaying = false
+    private var isReady = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -69,16 +74,19 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
     }
 
     private fun collectVideoItem() {
-        binding?.progressMain?.visibility = View.VISIBLE
-        viewModel.getRandomVideoData()
-            .observe(viewLifecycleOwner) { vi ->
-                vi?.let {
-                    videoItem = vi
-                    prepareSentence(vi)
-                    initNow()
+        Handler(Looper.getMainLooper()).post {
+            binding?.progressMain?.visibility = View.VISIBLE
+            viewModel.getRandomVideoData()
+                .observe(viewLifecycleOwner) { vi ->
+                    vi?.let {
+                        videoItem = vi
+                        mapIndex()
+                        prepareSentence(vi)
+                        initNow()
+                    }
+                    binding?.progressMain?.visibility = View.GONE
                 }
-                binding?.progressMain?.visibility = View.GONE
-            }
+        }
     }
 
     private fun prepareSentence(it: VideoItem) {
@@ -106,6 +114,14 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
         } ?: run {
             initFab()
             collectVideoItem()
+        }
+
+        binding?.view?.setOnClickListener {
+            if (isPlaying) {
+                youTubePlayer?.pause()
+            } else {
+                youTubePlayer?.play()
+            }
         }
     }
 
@@ -191,9 +207,11 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
             }
         }
 
-        binding?.rvSentenceVerticalList?.scrollToPosition(position)
         binding?.rvSentenceVerticalList?.post {
             sentenceVerticalListAdapter?.activate(position)
+            Handler(Looper.getMainLooper()).post {
+                binding?.rvSentenceVerticalList?.smoothScrollToPosition(position)
+            }
         }
     }
 
@@ -234,6 +252,11 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
             }
         }
 
+        mapIndex()
+    }
+
+    private fun mapIndex() {
+        indexMap.clear()
         videoItem?.let {
             it.sentences.forEachIndexed { index, sentence ->
                 indexMap[sentence.startTimeSec] = index
@@ -307,15 +330,18 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
     override fun onReady(youTubePlayer: YouTubePlayer) {
         this.youTubePlayer = youTubePlayer
         initVideoPlaying()
+        isReady = true
     }
 
     override fun onStateChange(youTubePlayer: YouTubePlayer, state: PlayerConstants.PlayerState) {
         when (state) {
             PlayerConstants.PlayerState.PLAYING -> {
                 binding?.ivPlay?.visibility = View.GONE
+                isPlaying = true
             }
             PlayerConstants.PlayerState.PAUSED -> {
                 binding?.ivPlay?.visibility = View.VISIBLE
+                isPlaying = false
             }
             else -> {
             }

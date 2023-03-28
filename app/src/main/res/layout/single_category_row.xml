@@ -7,7 +7,7 @@
     android:layout_marginStart="10dp"
     android:layout_marginEnd="10dp"
     android:layout_marginBottom="10dp"
-    android:background="@drawable/border_shape_round_white"
+    android:background="@drawable/border_shape_round_grey"
     android:paddingTop="10dp"
     android:paddingBottom="10dp">
 
@@ -16,14 +16,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingStart="20dp"
-        android:paddingEnd="20dp"
+        android:paddingEnd="10dp"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/white"
+        android:textAllCaps="true"
+        android:singleLine="true"
+        android:drawablePadding="30dp"
+        android:layout_marginTop="4dp"
         app:drawableEndCompat="@drawable/baseline_arrow_forward_24"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:text="This is a category" />
+        tools:text="This is a category alsdjflsdjf lsd fsldjf dslfj " />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_sub_category"
