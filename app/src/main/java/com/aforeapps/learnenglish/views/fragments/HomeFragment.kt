@@ -69,7 +69,9 @@ class HomeFragment : Fragment() {
             observerData()
         }
 
-        observerData()
+        if (categoryListAdapter.itemCount == 0) {
+            observerData()
+        }
     }
 
     private fun observerData() {

@@ -48,6 +48,7 @@ class VideoListFragment : Fragment() {
                 arrayListOf(),
                 object : VideoListAdapter.VideoItemClickListener {
                     override fun onVideoItemClicked(videoItem: VideoItem) {
+                        binding?.progressMainTransparent?.visibility = View.VISIBLE
                         videoListViewModel.getFullVideoData(videoItem.id)
                             .observe(viewLifecycleOwner) { vi ->
                                 vi?.let {
@@ -63,6 +64,7 @@ class VideoListFragment : Fragment() {
                                         navController.getNavigationAnimation()
                                     )
                                 }
+                                binding?.progressMainTransparent?.visibility = View.GONE
                             }
                     }
                 }, this

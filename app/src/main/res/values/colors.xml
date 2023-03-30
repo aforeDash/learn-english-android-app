@@ -12,4 +12,5 @@
     <color name="blue">#42A5F5</color>
 
     <color name="colorBackground">#414141</color>
+    <color name="colorBackgroundTrans">#7C414141</color>
 </resources>

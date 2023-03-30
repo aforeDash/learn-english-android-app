@@ -304,9 +304,9 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                 youTubePlayer.pause()
             }
 
+            binding?.progressBar?.progress = (second - videoItem.startTimeSec).toInt()
         }
 
-        binding?.progressBar?.progress = (second).toInt()
     }
 
     override fun onError(youTubePlayer: YouTubePlayer, error: PlayerConstants.PlayerError) {

@@ -20,7 +20,6 @@
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/white"
-        android:textAllCaps="true"
         android:singleLine="true"
         android:drawablePadding="30dp"
         android:layout_marginTop="4dp"

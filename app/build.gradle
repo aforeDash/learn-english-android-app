@@ -7,6 +7,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('/Volumes/Personal/Project/LearnEnglish/learnenglish')
+            storePassword '/*--*/'
+            keyAlias 'key0'
+            keyPassword '/*--*/'
+        }
+    }
     namespace 'com.aforeapps.learnenglish'
     compileSdk 33
 
@@ -22,8 +30,9 @@ android {
 
     buildTypes {
         release {
-            minifyEnabled false
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
     }
     compileOptions {

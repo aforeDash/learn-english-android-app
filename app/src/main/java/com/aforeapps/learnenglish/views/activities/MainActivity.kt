@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity() {
 
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_home, R.id.navigation_random_player_fragment, R.id.navigation_notifications
+                R.id.navigation_home,
+                R.id.navigation_random_player_fragment,
+                R.id.navigation_notifications
             )
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -67,6 +69,14 @@ class MainActivity : AppCompatActivity() {
         super.onWindowFocusChanged(hasFocus)
     }
 
+    override fun onBackPressed() {
+        val navController = findNavController(R.id.nav_host_fragment_activity_main)
+        if (navController.currentDestination?.id == R.id.navigation_player_fragment) {
+            navController.navigateUp()
+        } else {
+            super.onBackPressed()
+        }
+    }
 }
 
 fun Context.hideNavView() {
