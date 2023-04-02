@@ -26,5 +26,9 @@ data class SubCategory(
     val name: String,
     val order: Int,
     val parent_id: Int,
-    val updated_at: String
+    val updated_at: String,
+    val thumbnail_url: String,
+    val thumbnail_url1: String,
+    val thumbnail_url2: String,
+    val thumbnail_url3: String,
 )

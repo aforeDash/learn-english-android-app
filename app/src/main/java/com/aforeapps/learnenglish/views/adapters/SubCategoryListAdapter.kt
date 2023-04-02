@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.fragment.NavHostFragment
@@ -13,6 +14,7 @@ import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.DataConverter
 import com.aforeapps.learnenglish.data.models.SubCategory
 import com.aforeapps.learnenglish.utils.getNavigationAnimation
+import com.bumptech.glide.Glide
 
 class SubCategoryListAdapter(
     private val context: Context,
@@ -23,6 +25,7 @@ class SubCategoryListAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         private val tvSubCategoryName: TextView = itemView.findViewById(R.id.tv_sub_category_name)
+        private val ivImage: ImageView = itemView.findViewById(R.id.iv_image)
 
         private var subCategory: SubCategory? = null
 
@@ -57,6 +60,11 @@ class SubCategoryListAdapter(
             this.subCategory = subCategory
 
             tvSubCategoryName.text = subCategory.name
+
+            Glide.with(context)
+                .load(subCategory.thumbnail_url)
+                .placeholder(R.drawable.image)
+                .into(ivImage)
         }
     }
 

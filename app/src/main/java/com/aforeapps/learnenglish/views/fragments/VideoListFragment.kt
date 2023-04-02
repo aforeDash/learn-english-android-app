@@ -117,12 +117,14 @@ class VideoListFragment : Fragment() {
                 }
                 binding?.progressMain?.visibility = View.GONE
 
-                if (videoData.videoItems == null ||
-                    videoData.videoItems.isEmpty()
-                ) {
-                    binding?.error?.visibility = View.VISIBLE
-                } else {
-                    binding?.error?.visibility = View.GONE
+                videoData?.let {
+                    if (videoData.videoItems == null ||
+                        videoData.videoItems.isEmpty()
+                    ) {
+                        binding?.error?.visibility = View.VISIBLE
+                    } else {
+                        binding?.error?.visibility = View.GONE
+                    }
                 }
             }
         }

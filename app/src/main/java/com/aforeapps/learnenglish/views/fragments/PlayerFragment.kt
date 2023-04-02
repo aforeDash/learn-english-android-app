@@ -80,6 +80,7 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                 .observe(viewLifecycleOwner) { vi ->
                     vi?.let {
                         videoItem = vi
+                        binding?.progressBar?.max = 0
                         mapIndex()
                         prepareSentence(vi)
                         initNow()
