@@ -18,10 +18,10 @@
         tools:layout="@layout/fragment_favorite" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.aforeapps.learnenglish.views.fragments.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_practice"
+        android:name="com.aforeapps.learnenglish.views.fragments.PracticeFragment"
+        android:label="@string/title_practice"
+        tools:layout="@layout/fragment_practice" />
 
     <fragment
         android:id="@+id/navigation_random_player_fragment"

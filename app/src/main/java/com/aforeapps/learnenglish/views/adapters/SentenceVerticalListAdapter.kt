@@ -1,7 +1,6 @@
 package com.aforeapps.learnenglish.views.adapters
 
 import android.content.Context
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.models.Sentence
-
 
 class SentenceVerticalListAdapter(
     private val context: Context,
@@ -74,5 +72,12 @@ class SentenceVerticalListAdapter(
         notifyItemChanged(position)
 
         lastPlayingPosition = position
+    }
+
+    fun getCurrentPosition(): Int {
+        return if (SentenceListAdapter.repeatEnabled)
+            currentPosition
+        else
+            -1
     }
 }

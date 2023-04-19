@@ -7,4 +7,10 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pages">#/$</string>
     <string name="random_videos">Arbitrary</string>
+    <string name="title_practice">Practice</string>
+    <string name="default_audio">Default Audio</string>
+    <string name="your_audio">Your Audio</string>
+    <string name="record">Record</string>
+    <string name="stop">Stop</string>
+    <string name="play">Play</string>
 </resources>

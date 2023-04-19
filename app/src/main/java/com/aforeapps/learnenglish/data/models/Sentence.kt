@@ -8,5 +8,5 @@ data class Sentence(
     @SerializedName("start_time_sec") val startTimeSec: Long,
     @SerializedName("end_time_sec") val endTimeSec: Long,
     var isPlaying: Boolean = false,
-) {
-}
+    var audioTrack: Int = 0,
+)
