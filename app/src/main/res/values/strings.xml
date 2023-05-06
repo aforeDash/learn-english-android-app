@@ -1,12 +1,12 @@
 <resources>
     <string name="app_name">Learn English</string>
     <string name="title_home">Categories</string>
-    <string name="title_favorite">Arbitrary</string>
+    <string name="title_favorite">Random</string>
     <string name="title_notifications">Notifications</string>
     <string name="video_thumbnail">Video thumbnail</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="pages">#/$</string>
-    <string name="random_videos">Arbitrary</string>
+    <string name="random_videos">Random</string>
     <string name="title_practice">Practice</string>
     <string name="default_audio">Default Audio</string>
     <string name="your_audio">Your Audio</string>
