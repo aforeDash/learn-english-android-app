@@ -25,6 +25,7 @@ import com.aforeapps.learnenglish.data.DataConverter
 import com.aforeapps.learnenglish.data.models.VideoItem
 import com.aforeapps.learnenglish.databinding.FragmentPracticeBinding
 import com.aforeapps.learnenglish.utils.AudioRecorder
+import com.aforeapps.learnenglish.utils.FakeVideoItemGenerator
 import com.aforeapps.learnenglish.viewmodels.PlayerViewModel
 import com.aforeapps.learnenglish.views.activities.hideNavView
 import com.aforeapps.learnenglish.views.activities.showNavView
@@ -154,6 +155,14 @@ class PracticeFragment : Fragment(), YouTubePlayerListener {
                     mapIndex()
                     prepareSentence(vi)
                     initNow()
+                } ?: let {
+                    FakeVideoItemGenerator.getVideoItems(1).let {
+                        videoItem = it[0]
+                        binding?.progressBar?.max = 0
+                        mapIndex()
+                        prepareSentence(it[0])
+                        initNow()
+                    }
                 }
                 binding?.progressMain?.visibility = View.GONE
             }

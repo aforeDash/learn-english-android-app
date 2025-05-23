@@ -84,6 +84,14 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                         mapIndex()
                         prepareSentence(vi)
                         initNow()
+                    } ?: let {
+                        FakeVideoItemGenerator.getVideoItems(1).let {
+                            videoItem = it[0]
+                            binding?.progressBar?.max = 0
+                            mapIndex()
+                            prepareSentence(it[0])
+                            initNow()
+                        }
                     }
                     binding?.progressMain?.visibility = View.GONE
                 }
@@ -152,7 +160,8 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                 itemAnimator = null
             }
 
-            binding?.rvSentenceList?.attachSnapHelperWithListener(SnapHelper().snapHelper,
+            binding?.rvSentenceList?.attachSnapHelperWithListener(
+                SnapHelper().snapHelper,
                 SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE,
                 object : OnSnapPositionChangeListener {
                     override fun onSnapPositionChange(position: Int) {
@@ -198,10 +207,12 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                 binding?.ibBack?.visibility = View.GONE
                 binding?.ibForward?.visibility = View.VISIBLE
             }
+
             videoItem!!.sentences.size - 1 -> {
                 binding?.ibBack?.visibility = View.VISIBLE
                 binding?.ibForward?.visibility = View.GONE
             }
+
             else -> {
                 binding?.ibBack?.visibility = View.VISIBLE
                 binding?.ibForward?.visibility = View.VISIBLE
@@ -340,10 +351,12 @@ class PlayerFragment : Fragment(), YouTubePlayerListener {
                 binding?.ivPlay?.visibility = View.GONE
                 isPlaying = true
             }
+
             PlayerConstants.PlayerState.PAUSED -> {
                 binding?.ivPlay?.visibility = View.VISIBLE
                 isPlaying = false
             }
+
             else -> {
             }
         }
