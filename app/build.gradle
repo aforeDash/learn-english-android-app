@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android' version '1.9.24'
     id 'kotlin-kapt'
     id 'com.google.gms.google-services'
-    id 'com.google.firebase.crashlytics'
 }
 
 android {
