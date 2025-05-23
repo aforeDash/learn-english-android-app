@@ -14,20 +14,4 @@
         <item name="android:windowLightStatusBar" tools:targetApi="m">false</item>
         <item name="android:textColorPrimary">@color/white</item>
     </style>
-
-    <style name="Theme.App.Starting" parent="Theme.SplashScreen">
-        <!-- Set the splash screen background, animated icon, and animation duration. -->
-        <item name="windowSplashScreenBackground">@color/colorBackground</item>
-
-        <!-- Use windowSplashScreenAnimatedIcon to add either a drawable or an
-             animated drawable. One of these is required. -->
-        <item name="windowSplashScreenAnimatedIcon">@drawable/app_icon</item>
-
-
-        <!--The attribute postSplashScreenTheme sets the theme that
-        applies after the splash screen has dismissed. This is also
-        the theme set in the launcher activity in AndroidManifest.xml.-->
-        <item name="postSplashScreenTheme">@style/Theme.LearnEnglish</item>
-
-    </style>
 </resources>

@@ -59,9 +59,15 @@ class VideoListFragment : Fragment() {
                                         requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
 
                                     navController.navigate(
-                                        R.id.navigation_player_fragment,
-                                        bundle,
-                                        navController.getNavigationAnimation()
+                                        R.id.navigation_player_fragment, bundle, null
+                                    )
+                                } ?: run {
+                                    val bundle = Bundle()
+                                    bundle.putString(DATA, DataConverter.fromVideoItem(videoItem))
+                                    val navController =
+                                        requireActivity().findNavController(R.id.nav_host_fragment_activity_main)
+                                    navController.navigate(
+                                        R.id.navigation_player_fragment, bundle, null
                                     )
                                 }
                                 binding?.progressMainTransparent?.visibility = View.GONE
@@ -93,7 +99,8 @@ class VideoListFragment : Fragment() {
             itemAnimator = null
         }
 
-        binding?.rvVideoList?.attachSnapHelperWithListener(SnapHelper().snapHelper,
+        binding?.rvVideoList?.attachSnapHelperWithListener(
+            SnapHelper().snapHelper,
             SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE,
             object : OnSnapPositionChangeListener {
                 override fun onSnapPositionChange(position: Int) {}
@@ -113,19 +120,23 @@ class VideoListFragment : Fragment() {
                 videoData?.videoItems?.forEachIndexed { index, videoItem ->
                     videoListAdapter.addItem(videoItem, index)
                 } ?: run {
-                    Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
+                    FakeVideoItemGenerator.getVideoItems(1)
+                        .forEachIndexed { index, videoItem ->
+                            videoListAdapter.addItem(videoItem, index)
+                        }
+                    //Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
                 }
                 binding?.progressMain?.visibility = View.GONE
 
-                videoData?.let {
-                    if (videoData.videoItems == null ||
-                        videoData.videoItems.isEmpty()
-                    ) {
-                        binding?.error?.visibility = View.VISIBLE
-                    } else {
-                        binding?.error?.visibility = View.GONE
-                    }
-                }
+//                videoData?.let {
+//                    if (videoData.videoItems == null ||
+//                        videoData.videoItems.isEmpty()
+//                    ) {
+//                        binding?.error?.visibility = View.VISIBLE
+//                    } else {
+//                        binding?.error?.visibility = View.GONE
+//                    }
+//                }
             }
         }
     }

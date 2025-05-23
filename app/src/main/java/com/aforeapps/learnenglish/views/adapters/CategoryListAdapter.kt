@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.DataConverter
 import com.aforeapps.learnenglish.data.models.Category
-import com.aforeapps.learnenglish.utils.getNavigationAnimation
 
 class CategoryListAdapter(
     private val context: Context,
@@ -60,7 +59,7 @@ class CategoryListAdapter(
                 navController.navigate(
                     R.id.navigation_sub_category_fragment,
                     bundle,
-                    navController.getNavigationAnimation()
+                    null
                 )
             }
         }

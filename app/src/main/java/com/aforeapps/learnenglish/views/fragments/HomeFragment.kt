@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.aforeapps.learnenglish.databinding.FragmentHomeBinding
+import com.aforeapps.learnenglish.utils.FakeVideoItemGenerator
 import com.aforeapps.learnenglish.utils.OnSnapPositionChangeListener
 import com.aforeapps.learnenglish.utils.SnapHelper
 import com.aforeapps.learnenglish.utils.SnapOnScrollListener
@@ -59,7 +60,8 @@ class HomeFragment : Fragment() {
             itemAnimator = null
         }
 
-        binding?.rvVideoList?.attachSnapHelperWithListener(SnapHelper().snapHelper,
+        binding?.rvVideoList?.attachSnapHelperWithListener(
+            SnapHelper().snapHelper,
             SnapOnScrollListener.Behavior.NOTIFY_ON_SCROLL_STATE_IDLE,
             object : OnSnapPositionChangeListener {
                 override fun onSnapPositionChange(position: Int) {}
@@ -80,15 +82,18 @@ class HomeFragment : Fragment() {
             it?.categories?.forEachIndexed { index, category ->
                 categoryListAdapter.addItem(category, index)
             } ?: run {
-                Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
+                FakeVideoItemGenerator.getFakeCategories().categories?.forEachIndexed { index, category ->
+                    categoryListAdapter.addItem(category, index)
+                }
+                //Toast.makeText(context, "No Connection", Toast.LENGTH_SHORT).show()
             }
             binding?.progressMain?.visibility = View.GONE
 
-            if (it == null) {
-                binding?.error?.visibility = View.VISIBLE
-            } else {
-                binding?.error?.visibility = View.GONE
-            }
+//            if (it == null) {
+//                binding?.error?.visibility = View.VISIBLE
+//            } else {
+//                binding?.error?.visibility = View.GONE
+//            }
         }
     }
 

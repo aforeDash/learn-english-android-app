@@ -1,18 +1,62 @@
-*.iml
-.gradle
+# Gradle files
+.gradle/
+build/
+*/build/
+
+# Local configuration files
+local.properties
 /local.properties
+
+# IntelliJ/Android Studio files
+.idea/
+*.iml
+
+# Mac OS files
+.DS_Store
+
+# NDK/External build
+.externalNativeBuild/
+.cxx/
+
+# Captures
+captures/
+
+# APKs
+app/release/*.apk
+app/release/output-metadata.json
+
+# Kotlin compile cache
+.idea/kotlinc.xml
+
+# Misc
+*.log
+
+# Exclude generated files
+*.apk
+*.ap_
+*.dex
+
+# Exclude test result files
+*.ec
+
+# Exclude signing files
+*.jks
+
+# Exclude crashlytics and fabric files
+fabric.properties
+crashlytics.properties
+
+# Exclude Proguard files
+proguard/
+
+# Exclude local gradle wrapper properties
+gradle-wrapper.jar
+gradle-wrapper.properties
+
+# Exclude dependency caches
 /.idea/caches
 /.idea/libraries
 /.idea/modules.xml
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
-.DS_Store
-/build
-/captures
-.externalNativeBuild
-.cxx
-local.properties
-/app/release/app-release.apk
-/.idea/kotlinc.xml
-/app/release/output-metadata.json

@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.aforeapps.learnenglish.R
 import com.aforeapps.learnenglish.data.DataConverter
 import com.aforeapps.learnenglish.data.models.SubCategory
-import com.aforeapps.learnenglish.utils.getNavigationAnimation
 import com.bumptech.glide.Glide
 
 class SubCategoryListAdapter(
@@ -47,7 +46,7 @@ class SubCategoryListAdapter(
                     navController.navigate(
                         R.id.navigation_video_list_fragment,
                         bundle,
-                        navController.getNavigationAnimation()
+                        null
                     )
                 }
             }
